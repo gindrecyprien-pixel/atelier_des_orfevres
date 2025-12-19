@@ -13,7 +13,8 @@
             padding: 50px;
             min-height: 100vh;
             position: relative;
-            overflow: hidden;
+            overflow-x: hidden;
+            overflow-y: auto;
         }
 
         .decoration {
@@ -77,10 +78,15 @@
         #resultat {
             font-size: 1.5em;
             margin-top: 20px;
+            margin-bottom: 50px;
             font-weight: bold;
             text-shadow: 1px 1px 2px #000;
             white-space: pre-line;
             color: #ffd700;
+            max-width: 90%;
+            margin-left: auto;
+            margin-right: auto;
+            word-wrap: break-word;
         }
 
         .description {
@@ -89,10 +95,14 @@
             color: #ffd700;
             padding: 12px 15px;
             margin-top: 20px;
+            margin-bottom: 30px;
             border-radius: 12px;
             font-size: 1em;
             font-weight: normal;
             animation: scintille 3s infinite alternate;
+            max-width: 100%;
+            word-wrap: break-word;
+            box-sizing: border-box;
         }
 
         .warning {
@@ -101,11 +111,15 @@
             color: #ff6b6b;
             padding: 15px 20px;
             margin-top: 20px;
+            margin-bottom: 30px;
             border-radius: 12px;
             font-size: 1.1em;
             font-weight: bold;
             border: 2px solid #ff4444;
             animation: warningPulse 2s infinite;
+            max-width: 100%;
+            word-wrap: break-word;
+            box-sizing: border-box;
         }
 
         @keyframes warningPulse {
