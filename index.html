@@ -7,7 +7,7 @@
     <style>
         body {
             background: linear-gradient(135deg, #000000, #FFD700, #000000);
-            color: #FFFFFF; /* Changé pour plus de contraste */
+            color: #FFFFFF;
             font-family: 'Georgia', serif;
             text-align: center;
             padding: 50px;
@@ -25,21 +25,21 @@
         .diamond2 { bottom: 5%; right: 10%; font-size: 3em; }
         h1 {
             font-size: 3em;
-            text-shadow: 2px 2px 4px #000, 0 0 10px #FFD700; /* Ombre renforcée pour contraste */
+            text-shadow: 2px 2px 4px #000, 0 0 10px #FFD700;
             border-bottom: 2px solid #FFD700;
             padding-bottom: 10px;
         }
         p {
             font-size: 1.2em;
             margin: 20px 0;
-            text-shadow: 1px 1px 2px #000; /* Ajout d'ombre pour contraste */
+            text-shadow: 1px 1px 2px #000;
         }
         input {
             padding: 10px;
             font-size: 1em;
             border: 2px solid #FFD700;
             background: #000;
-            color: #FFFFFF; /* Blanc pour contraste */
+            color: #FFFFFF;
             border-radius: 5px;
             width: 80%;
             max-width: 300px;
@@ -63,42 +63,18 @@
             font-size: 1.5em;
             margin-top: 20px;
             font-weight: bold;
-            text-shadow: 1px 1px 2px #000; /* Ombre pour contraste */
+            text-shadow: 1px 1px 2px #000;
         }
-    </style>
-    <style media="(max-width: 768px)">
-        body {
-            padding: 20px;
-        }
-        h1 {
-            font-size: 2em;
-        }
-        p {
-            font-size: 1em;
-        }
-        input {
-            width: 80%;
-            max-width: 300px;
-        }
-        button {
-            width: 80%;
-            max-width: 300px;
-            margin: 10px 0;
-        }
-        .decoration {
-            display: block; /* Afficher décorations sur mobile */
-            font-size: 1.5em; /* Réduire taille */
-        }
-        .diamond1, .diamond2 {
-            top: 150px; /* Ajuster position diamants */
-            bottom: auto;
-        }
-        .mask1, .mask2 {
-            display: block; /* Afficher masques sur mobile */
-            top: 80px;
-        }
-        #resultat {
-            font-size: 1.2em;
+        @media (max-width: 768px) {
+            body { padding: 20px; }
+            h1 { font-size: 2em; }
+            p { font-size: 1em; }
+            input { width: 80%; max-width: 300px; }
+            button { width: 80%; max-width: 300px; margin: 10px 0; }
+            .decoration { display: block; font-size: 1.5em; }
+            .diamond1, .diamond2 { top: 150px; bottom: auto; }
+            .mask1, .mask2 { display: block; top: 80px; }
+            #resultat { font-size: 1.2em; }
         }
     </style>
 </head>
@@ -107,17 +83,36 @@
     <div class="decoration mask2">🎭</div>
     <div class="decoration diamond1">💎</div>
     <div class="decoration diamond2">💎</div>
+
     <h1>Estimation des objets</h1>
+
     <p>Entrez le code de l'objet :</p>
     <input type="text" id="codeInput" placeholder="Entrez le code">
+
     <p>Code de l'orfèvre :</p>
     <input type="password" id="orfèvreCode" placeholder="Entrez le code de l'orfèvre">
+
     <p id="valeurLabel" style="display:none;">Entrez la valeur souhaitée :</p>
     <input type="text" id="valeurInput" style="display:none;" placeholder="Entrez la valeur">
+
     <button onclick="valider()">Valider</button>
     <p id="resultat"></p>
 
     <script>
+        // Dictionnaire des objets et leurs valeurs
+        const objets = {
+            "Klein_5943": "3€",
+            "Gondole_2776": "2€",
+            "Mobius_1756": "4€",
+            "Grenade_2952": "5€",
+            "Hibou_1959": "1€",
+            "XXX_3076": "10€",
+            "XXX_1502": "10€",
+            "XXX_2202": "10€",
+            "XXX_3895": "10€",
+            "Collier_8960": "Cette objet est inestimable"
+        };
+
         function valider() {
             const orfèvre = document.getElementById('orfèvreCode').value;
             const code = document.getElementById('codeInput').value;
@@ -128,21 +123,22 @@
             if (orfèvre === 'estimationreel') {
                 valeurLabel.style.display = 'none';
                 valeurInput.style.display = 'none';
-                if (code === '1234') {
-                    message = 'l\'objet vaut 5€';
-                } else if (code === '4321') {
-                    message = 'L\'objet vaut 10€';
+
+                if (objets.hasOwnProperty(code)) {
+                    message = `L'objet "${code}" vaut ${objets[code]}`;
                 } else {
-                    message = 'l\'objet n\'est pas répertorié';
+                    message = 'L\'objet n\'est pas répertorié';
                 }
+
                 document.getElementById('orfèvreCode').value = '';
             } else if (orfèvre === 'fausseestimation') {
                 valeurLabel.style.display = 'block';
                 valeurInput.style.display = 'block';
                 const valeur = valeurInput.value;
-                valeurInput.value = ''; // Vider après lecture pour permettre modification future
+                valeurInput.value = '';
+
                 if (valeur) {
-                    message = 'l\'objet vaut ' + valeur + '€';
+                    message = `L'objet vaut ${valeur}€`;
                     valeurLabel.style.display = 'none';
                     valeurInput.style.display = 'none';
                     document.getElementById('orfèvreCode').value = '';
@@ -154,8 +150,10 @@
                 valeurInput.style.display = 'none';
                 message = 'Code de l\'orfèvre invalide.';
             }
+
             document.getElementById('resultat').textContent = message;
         }
     </script>
 </body>
 </html>
+
