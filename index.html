@@ -5,9 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Atelier des orfèvres</title>
     <style>
-        /* Couleurs et thème */
+        /* Fond Carnaval de Venise */
         body {
-            background: linear-gradient(135deg, #1a1a1a, #330033, #1a1a1a);
+            background: linear-gradient(135deg, #660033, #800080, #1a1a1a);
+            background-image: linear-gradient(rgba(255,215,0,0.05), rgba(255,215,0,0.05)), linear-gradient(135deg, #660033, #800080, #1a1a1a);
+            background-blend-mode: overlay;
             color: #f5f5f5;
             font-family: 'Garamond', 'Georgia', serif;
             text-align: center;
@@ -15,16 +17,17 @@
             min-height: 100vh;
             position: relative;
         }
-        /* Décorations de carnaval */
+
+        /* Décorations festives */
         .decoration {
             position: absolute;
             font-size: 2em;
             opacity: 0.7;
         }
-        .mask1 { top: 5%; left: 5%; color: #990000; }
-        .mask2 { top: 5%; right: 5%; color: #990000; }
-        .diamond1 { bottom: 5%; left: 10%; font-size: 3em; color: #cc9900; }
-        .diamond2 { bottom: 5%; right: 10%; font-size: 3em; color: #cc9900; }
+        .mask1 { top: 5%; left: 5%; color: #cc0000; transform: rotate(-15deg); }
+        .mask2 { top: 5%; right: 5%; color: #cc0000; transform: rotate(15deg); }
+        .diamond1 { bottom: 5%; left: 10%; font-size: 3em; color: #d4af37; }
+        .diamond2 { bottom: 5%; right: 10%; font-size: 3em; color: #d4af37; }
 
         /* Titre */
         h1 {
@@ -43,7 +46,7 @@
             text-shadow: 1px 1px 2px #000;
         }
 
-        /* Input et bouton */
+        /* Inputs et boutons */
         input {
             padding: 10px;
             font-size: 1em;
@@ -94,7 +97,7 @@
             background: rgba(191, 163, 90, 0.15);
             color: #f5f5f5;
             padding: 12px 15px;
-            margin-top: 15px;
+            margin-top: 20px;
             border-radius: 12px;
             font-size: 1em;
             font-weight: normal;
@@ -106,6 +109,7 @@
             100% { background: rgba(191, 163, 90, 0.15); box-shadow: 0 0 5px #bfa35a; }
         }
 
+        /* Responsive */
         @media (max-width: 768px) {
             body { padding: 20px; }
             h1 { font-size: 2em; margin-bottom: 30px; }
