@@ -157,53 +157,85 @@
             "XXX_1502": { valeur: "10MV", description: "Objet mystérieux à collectionner." },
             "XXX_2202": { valeur: "10MV", description: "Objet mystérieux à collectionner." },
             "XXX_3895": { valeur: "10MV", description: "Objet mystérieux à collectionner." },
-            "Collier_8960": { valeur: "Cette objet est inestimable", description: "Collier légendaire, unique et précieux." }
+            "Collier_8960": { valeur: null, description: "Collier légendaire, unique et précieux." }
         };
-
+    
         function valider() {
-            const orfèvre = document.getElementById('orfèvreCode').value;
+            const orfevre = document.getElementById('orfèvreCode').value;
             const code = document.getElementById('codeInput').value;
             const valeurInput = document.getElementById('valeurInput');
             const valeurLabel = document.getElementById('valeurLabel');
             const resultat = document.getElementById('resultat');
-
+    
             if (!objets.hasOwnProperty(code)) {
-                resultat.innerHTML = 'L\'objet n\'est pas répertorié';
-            } else if (orfèvre === 'estimationreel') {
-                valeurLabel.style.display = 'none';
-                valeurInput.style.display = 'none';
-                const message = `L'objet "${code}" vaut ${objets[code].valeur}\n\n`;
-                resultat.innerHTML = `${message}<span class="description">${objets[code].description}</span>`;
-                document.getElementById('orfèvreCode').value = '';
-            } else if (orfèvre === 'fausseestimation') {
-                valeurLabel.style.display = 'block';
-                valeurInput.style.display = 'block';
-                const valeur = valeurInput.value;
-                valeurInput.value = '';
-                if (valeur) {
-                    const message = `L'objet "${code}" vaut ${valeur}MV\n\n`;
-                    resultat.innerHTML = `${message}<span class="description">${objets[code].description}</span>`;
-                    valeurLabel.style.display = 'none';
-                    valeurInput.style.display = 'none';
-                    document.getElementById('orfèvreCode').value = '';
-                } else {
-                    resultat.innerHTML = 'Veuillez entrer une valeur souhaitée.';
-                }
-            } else {
-                valeurLabel.style.display = 'none';
-                valeurInput.style.display = 'none';
-                resultat.innerHTML = 'Code de l\'orfèvre invalide.';
+                resultat.innerHTML = "L'objet n'est pas répertorié.";
+                return;
             }
-        }
-
-        // Scintillements aléatoires
-        for (let i = 0; i < 50; i++) {
-            let sparkle = document.createElement('div');
-            sparkle.classList.add('sparkle');
-            sparkle.style.top = Math.random() * window.innerHeight + 'px';
-            sparkle.style.left = Math.random() * window.innerWidth + 'px';
-            sparkle.style.animationDelay = Math.random() * 3 + 's';
-            document.body.appendChild(sparkle);
+    
+            /* ===========================
+               ESTIMATION RÉELLE
+            ============================ */
+            if (orfevre === "estimationreel") {
+    
+                valeurLabel.style.display = "none";
+                valeurInput.style.display = "none";
+    
+                if (code === "Collier_8960") {
+                    resultat.innerHTML =
+                        `L'objet "Collier_8960" a une valeur inestimable !\n\n` +
+                        `<span class="description">${objets[code].description}</span>`;
+                } else {
+                    resultat.innerHTML =
+                        `L'objet "${code}" vaut ${objets[code].valeur}\n\n` +
+                        `<span class="description">${objets[code].description}</span>`;
+                }
+    
+                document.getElementById('orfèvreCode').value = '';
+                return;
+            }
+    
+            /* ===========================
+               FAUSSE ESTIMATION
+            ============================ */
+            if (orfevre === "fausseestimation") {
+    
+                // EXCEPTION ABSOLUE POUR LE COLLIER
+                if (code === "Collier_8960") {
+                    resultat.innerHTML =
+                        "C’est une honte absolue de chercher à tromper des citoyens honnêtes sur une pièce aussi unique. " +
+                        "Une telle pratique est inacceptable et profondément choquante.";
+                    valeurLabel.style.display = "none";
+                    valeurInput.style.display = "none";
+                    document.getElementById('orfèvreCode').value = '';
+                    return;
+                }
+    
+                valeurLabel.style.display = "block";
+                valeurInput.style.display = "block";
+    
+                const valeur = valeurInput.value.trim();
+                if (!valeur) {
+                    resultat.innerHTML = "Veuillez entrer une valeur souhaitée.";
+                    return;
+                }
+    
+                resultat.innerHTML =
+                    `L'objet "${code}" vaut ${valeur}MV\n\n` +
+                    `<span class="description">${objets[code].description}</span>`;
+    
+                valeurInput.value = '';
+                valeurLabel.style.display = "none";
+                valeurInput.style.display = "none";
+                document.getElementById('orfèvreCode').value = '';
+                return;
+            }
+    
+            /* ===========================
+               CODE ORFÈVRE INVALIDE
+            ============================ */
+            valeurLabel.style.display = "none";
+            valeurInput.style.display = "none";
+            resultat.innerHTML = "Code de l'orfèvre invalide.";
         }
     </script>
 </body>
