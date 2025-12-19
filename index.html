@@ -67,6 +67,7 @@
             opacity: 0;
             transform: translateY(-10px);
             transition: opacity 0.8s ease, transform 0.8s ease, text-shadow 0.8s ease;
+            white-space: pre-line; /* pour gérer les sauts de ligne */
         }
         #resultat.show {
             opacity: 1;
@@ -107,18 +108,18 @@
     <p id="resultat"></p>
 
     <script>
-        // Dictionnaire des objets et leurs valeurs
+        // Dictionnaire des objets avec valeur et description
         const objets = {
-            "Klein_5943": "3€",
-            "Gondole_2776": "2€",
-            "Mobius_1756": "4€",
-            "Grenade_2952": "5€",
-            "Hibou_1959": "1€",
-            "XXX_3076": "10€",
-            "XXX_1502": "10€",
-            "XXX_2202": "10€",
-            "XXX_3895": "10€",
-            "Collier_8960": "Cette objet est inestimable"
+            "Klein_5943": { valeur: "3€", description: "Une sculpture miniature célèbre." },
+            "Gondole_2776": { valeur: "2€", description: "Petit objet en forme de gondole." },
+            "Mobius_1756": { valeur: "4€", description: "Anneau de Möbius miniature." },
+            "Grenade_2952": { valeur: "5€", description: "Réplique décorative d'une grenade." },
+            "Hibou_1959": { valeur: "1€", description: "Petit hibou en céramique." },
+            "XXX_3076": { valeur: "10€", description: "Objet mystérieux à collectionner." },
+            "XXX_1502": { valeur: "10€", description: "Objet mystérieux à collectionner." },
+            "XXX_2202": { valeur: "10€", description: "Objet mystérieux à collectionner." },
+            "XXX_3895": { valeur: "10€", description: "Objet mystérieux à collectionner." },
+            "Collier_8960": { valeur: "Cette objet est inestimable", description: "Collier légendaire, unique et précieux." }
         };
 
         function valider() {
@@ -134,7 +135,7 @@
                 valeurInput.style.display = 'none';
 
                 if (objets.hasOwnProperty(code)) {
-                    message = `L'objet "${code}" vaut ${objets[code]}`;
+                    message = `L'objet "${code}" vaut ${objets[code].valeur}\nDescription : ${objets[code].description}`;
                 } else {
                     message = 'L\'objet n\'est pas répertorié';
                 }
@@ -160,7 +161,7 @@
                 message = 'Code de l\'orfèvre invalide.';
             }
 
-            // Effet magique : ajout de la classe "show" pour l'animation
+            // Affichage avec effet magique
             resultat.textContent = message;
             resultat.classList.remove('show');
             void resultat.offsetWidth; // reflow pour relancer l'animation
