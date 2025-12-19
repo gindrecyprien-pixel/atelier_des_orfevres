@@ -238,5 +238,18 @@
             resultat.innerHTML = "Code de l'orfèvre invalide.";
         }
     </script>
+        /* ===========================
+           SCINTILLEMENTS DE FOND
+        ============================ */
+        for (let i = 0; i < 60; i++) {
+            const sparkle = document.createElement("div");
+            sparkle.className = "sparkle";
+            sparkle.style.top = Math.random() * window.innerHeight + "px";
+            sparkle.style.left = Math.random() * window.innerWidth + "px";
+            sparkle.style.animationDelay = Math.random() * 3 + "s";
+            sparkle.style.animationDuration = (1 + Math.random() * 2) + "s";
+            document.body.appendChild(sparkle);
+        }
+
 </body>
 </html>
