@@ -7,7 +7,7 @@
     <style>
         body {
             background: linear-gradient(135deg, #1e3c72, #2a5298, #ffffff);
-            color: #ffd700; /* Texte doré */
+            color: #ffd700;
             font-family: 'Garamond', 'Georgia', serif;
             text-align: center;
             padding: 50px;
@@ -16,13 +16,12 @@
             overflow: hidden;
         }
 
-        /* Décorations diamants */
         .decoration {
             position: absolute;
             font-size: 2em;
             opacity: 0.8;
             transition: transform 0.5s;
-            color: #ffd700; /* doré */
+            color: #ffd700;
             animation: sparkleDiamond 3s infinite alternate;
         }
         .diamond1 { top: 5%; left: 5%; }
@@ -87,7 +86,7 @@
         .description {
             display: block;
             background: rgba(255, 215, 0, 0.2);
-            color: #ffd700; /* doré */
+            color: #ffd700;
             padding: 12px 15px;
             margin-top: 20px;
             border-radius: 12px;
@@ -96,13 +95,31 @@
             animation: scintille 3s infinite alternate;
         }
 
+        .warning {
+            display: block;
+            background: rgba(220, 20, 20, 0.3);
+            color: #ff6b6b;
+            padding: 15px 20px;
+            margin-top: 20px;
+            border-radius: 12px;
+            font-size: 1.1em;
+            font-weight: bold;
+            border: 2px solid #ff4444;
+            animation: warningPulse 2s infinite;
+        }
+
+        @keyframes warningPulse {
+            0% { box-shadow: 0 0 10px #ff4444; }
+            50% { box-shadow: 0 0 25px #ff4444; }
+            100% { box-shadow: 0 0 10px #ff4444; }
+        }
+
         @keyframes scintille {
             0% { background: rgba(255, 215, 0, 0.15); box-shadow: 0 0 5px #ffd700; }
             50% { background: rgba(255, 215, 0, 0.3); box-shadow: 0 0 15px #ffd700; }
             100% { background: rgba(255, 215, 0, 0.15); box-shadow: 0 0 5px #ffd700; }
         }
 
-        /* Petits scintillements aléatoires */
         .sparkle {
             position: absolute;
             width: 4px;
@@ -128,7 +145,6 @@
     </style>
 </head>
 <body>
-    <!-- Décorations diamants -->
     <div class="decoration diamond1">💎</div>
     <div class="decoration diamond2">💎</div>
 
@@ -157,7 +173,7 @@
             "XXX_1502": { valeur: "10MV", description: "Objet mystérieux à collectionner." },
             "XXX_2202": { valeur: "10MV", description: "Objet mystérieux à collectionner." },
             "XXX_3895": { valeur: "10MV", description: "Objet mystérieux à collectionner." },
-            "Collier_8960": { valeur: "Cette objet est inestimable", description: "Collier légendaire, unique et précieux." }
+            "Collier_8960": { valeur: "inestimable", description: "Collier légendaire, unique et précieux." }
         };
 
         function valider() {
@@ -172,22 +188,38 @@
             } else if (orfèvre === 'estimationreel') {
                 valeurLabel.style.display = 'none';
                 valeurInput.style.display = 'none';
-                const message = `L'objet "${code}" vaut ${objets[code].valeur}\n\n`;
-                resultat.innerHTML = `${message}<span class="description">${objets[code].description}</span>`;
+                
+                // Exception pour le Collier_8960
+                if (code === 'Collier_8960') {
+                    const message = `L'objet "${code}" a une valeur inestimable !\n\n`;
+                    resultat.innerHTML = `${message}<span class="description">${objets[code].description}</span>`;
+                } else {
+                    const message = `L'objet "${code}" vaut ${objets[code].valeur}\n\n`;
+                    resultat.innerHTML = `${message}<span class="description">${objets[code].description}</span>`;
+                }
+                
                 document.getElementById('orfèvreCode').value = '';
             } else if (orfèvre === 'fausseestimation') {
-                valeurLabel.style.display = 'block';
-                valeurInput.style.display = 'block';
-                const valeur = valeurInput.value;
-                valeurInput.value = '';
-                if (valeur) {
-                    const message = `L'objet "${code}" vaut ${valeur}MV\n\n`;
-                    resultat.innerHTML = `${message}<span class="description">${objets[code].description}</span>`;
+                // Exception pour le Collier_8960
+                if (code === 'Collier_8960') {
                     valeurLabel.style.display = 'none';
                     valeurInput.style.display = 'none';
+                    resultat.innerHTML = '<span class="warning">C\'est une honte absolue de chercher à tromper des gens intègres sur une pièce aussi unique. Une telle pratique est inacceptable et profondément choquante.</span>';
                     document.getElementById('orfèvreCode').value = '';
                 } else {
-                    resultat.innerHTML = 'Veuillez entrer une valeur souhaitée.';
+                    valeurLabel.style.display = 'block';
+                    valeurInput.style.display = 'block';
+                    const valeur = valeurInput.value;
+                    valeurInput.value = '';
+                    if (valeur) {
+                        const message = `L'objet "${code}" vaut ${valeur}MV\n\n`;
+                        resultat.innerHTML = `${message}<span class="description">${objets[code].description}</span>`;
+                        valeurLabel.style.display = 'none';
+                        valeurInput.style.display = 'none';
+                        document.getElementById('orfèvreCode').value = '';
+                    } else {
+                        resultat.innerHTML = 'Veuillez entrer une valeur souhaitée.';
+                    }
                 }
             } else {
                 valeurLabel.style.display = 'none';
