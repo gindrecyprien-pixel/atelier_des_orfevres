@@ -7,7 +7,7 @@
     <style>
         body {
             background: linear-gradient(135deg, #1e3c72, #2a5298, #ffffff);
-            color: #1a1a1a;
+            color: #ffd700; /* Texte doré */
             font-family: 'Garamond', 'Georgia', serif;
             text-align: center;
             padding: 50px;
@@ -22,29 +22,15 @@
             font-size: 2em;
             opacity: 0.7;
             transition: transform 0.5s;
+            color: #ffd700; /* doré */
         }
-        .mask1 { top: 5%; left: 5%; color: #ffd700; transform: rotate(-15deg); }
-        .mask2 { top: 5%; right: 5%; color: #ffd700; transform: rotate(15deg); }
-
-        /* Diamants décoratifs */
-        .diamond {
-            position: absolute;
-            font-size: 2em;
-            color: #ffd700;
-            opacity: 0.8;
-            animation: sparkleDiamond 3s infinite alternate;
-        }
-        @keyframes sparkleDiamond {
-            0% { transform: scale(1); opacity: 0.6; }
-            50% { transform: scale(1.3); opacity: 1; }
-            100% { transform: scale(1); opacity: 0.6; }
-        }
+        .mask1 { top: 5%; left: 5%; transform: rotate(-15deg); }
+        .mask2 { top: 5%; right: 5%; transform: rotate(15deg); }
 
         h1 {
             font-size: 3em;
             text-shadow: 2px 2px 4px #000, 0 0 10px #ffd700;
             margin-bottom: 40px;
-            color: #f0e6d2;
         }
 
         p {
@@ -88,12 +74,13 @@
             font-weight: bold;
             text-shadow: 1px 1px 2px #000;
             white-space: pre-line;
+            color: #ffd700;
         }
 
         .description {
             display: block;
             background: rgba(255, 215, 0, 0.2);
-            color: #1a1a1a;
+            color: #ffd700; /* doré */
             padding: 12px 15px;
             margin-top: 20px;
             border-radius: 12px;
@@ -153,7 +140,6 @@
     <p id="resultat"></p>
 
     <script>
-        // Objets
         const objets = {
             "Klein_5943": { valeur: "3MV", description: "Une sculpture miniature célèbre." },
             "Gondole_2776": { valeur: "2MV", description: "Petit objet en forme de gondole." },
@@ -211,18 +197,6 @@
             sparkle.style.left = Math.random() * window.innerWidth + 'px';
             sparkle.style.animationDelay = Math.random() * 3 + 's';
             document.body.appendChild(sparkle);
-        }
-
-        // Ajouter des diamants décoratifs dorés
-        for (let i = 0; i < 20; i++) {
-            let diamond = document.createElement('div');
-            diamond.classList.add('diamond');
-            diamond.innerText = '💎';
-            diamond.style.top = Math.random() * window.innerHeight + 'px';
-            diamond.style.left = Math.random() * window.innerWidth + 'px';
-            diamond.style.fontSize = (Math.random() * 30 + 20) + 'px';
-            diamond.style.opacity = Math.random() * 0.7 + 0.3;
-            document.body.appendChild(diamond);
         }
     </script>
 </body>
