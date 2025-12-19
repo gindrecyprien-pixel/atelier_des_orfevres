@@ -5,97 +5,83 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Atelier des orfèvres</title>
     <style>
-        /* Fond Carnaval de Venise */
+        /* Fond bleu et blanc avec gradient subtil */
         body {
-            background: linear-gradient(135deg, #660033, #800080, #1a1a1a);
-            background-image: linear-gradient(rgba(255,215,0,0.05), rgba(255,215,0,0.05)), linear-gradient(135deg, #660033, #800080, #1a1a1a);
-            background-blend-mode: overlay;
-            color: #f5f5f5;
+            background: linear-gradient(135deg, #1e3c72, #2a5298, #ffffff);
+            color: #1a1a1a;
             font-family: 'Garamond', 'Georgia', serif;
             text-align: center;
             padding: 50px;
             min-height: 100vh;
             position: relative;
+            overflow: hidden; /* Pour les scintillements */
         }
 
-        /* Décorations festives */
+        /* Décorations */
         .decoration {
             position: absolute;
             font-size: 2em;
             opacity: 0.7;
         }
-        .mask1 { top: 5%; left: 5%; color: #cc0000; transform: rotate(-15deg); }
-        .mask2 { top: 5%; right: 5%; color: #cc0000; transform: rotate(15deg); }
-        .diamond1 { bottom: 5%; left: 10%; font-size: 3em; color: #d4af37; }
-        .diamond2 { bottom: 5%; right: 10%; font-size: 3em; color: #d4af37; }
+        .mask1 { top: 5%; left: 5%; color: #ff4444; transform: rotate(-15deg); }
+        .mask2 { top: 5%; right: 5%; color: #ff4444; transform: rotate(15deg); }
+        .diamond1 { bottom: 5%; left: 10%; font-size: 3em; color: #ffd700; }
+        .diamond2 { bottom: 5%; right: 10%; font-size: 3em; color: #ffd700; }
 
-        /* Titre */
         h1 {
             font-size: 3em;
-            text-shadow: 2px 2px 4px #000, 0 0 10px #bfa35a;
-            border-bottom: 2px solid #bfa35a;
-            padding-bottom: 10px;
+            text-shadow: 2px 2px 4px #000;
             margin-bottom: 40px;
-            color: #f0e6d2;
+            color: #f0f0f0;
         }
 
-        /* Paragraphes */
         p {
             font-size: 1.2em;
             margin: 20px 0;
             text-shadow: 1px 1px 2px #000;
         }
 
-        /* Inputs et boutons */
         input {
             padding: 10px;
             font-size: 1em;
-            border: 2px solid #bfa35a;
-            background: #1a1a1a;
-            color: #f5f5f5;
+            border: 2px solid #1a1a1a;
+            background: #ffffff88;
+            color: #1a1a1a;
             border-radius: 8px;
             width: 80%;
             max-width: 300px;
             margin: 10px auto;
             display: block;
         }
+
         button {
             padding: 12px 25px;
             font-size: 1em;
-            background: #bfa35a;
-            color: #1a1a1a;
+            background: #1e3c72;
+            color: #ffffff;
             border: none;
             border-radius: 8px;
             cursor: pointer;
             margin-top: 10px;
             transition: 0.3s;
         }
+
         button:hover {
-            background: #e0c969;
+            background: #2a5298;
         }
 
-        /* Résultat */
         #resultat {
             font-size: 1.5em;
             margin-top: 20px;
             font-weight: bold;
             text-shadow: 1px 1px 2px #000;
-            opacity: 0;
-            transform: translateY(-10px);
-            transition: opacity 0.8s ease, transform 0.8s ease, text-shadow 0.8s ease;
             white-space: pre-line;
         }
-        #resultat.show {
-            opacity: 1;
-            transform: translateY(0);
-            text-shadow: 0 0 10px #bfa35a, 0 0 20px #bfa35a, 0 0 30px #bfa35a;
-        }
 
-        /* Description avec scintillement doré subtil */
         .description {
             display: block;
-            background: rgba(191, 163, 90, 0.15);
-            color: #f5f5f5;
+            background: rgba(255, 215, 0, 0.2);
+            color: #1a1a1a;
             padding: 12px 15px;
             margin-top: 20px;
             border-radius: 12px;
@@ -103,23 +89,35 @@
             font-weight: normal;
             animation: scintille 3s infinite alternate;
         }
+
         @keyframes scintille {
-            0% { background: rgba(191, 163, 90, 0.15); box-shadow: 0 0 5px #bfa35a; }
-            50% { background: rgba(191, 163, 90, 0.25); box-shadow: 0 0 15px #bfa35a; }
-            100% { background: rgba(191, 163, 90, 0.15); box-shadow: 0 0 5px #bfa35a; }
+            0% { background: rgba(255, 215, 0, 0.15); box-shadow: 0 0 5px #ffd700; }
+            50% { background: rgba(255, 215, 0, 0.3); box-shadow: 0 0 15px #ffd700; }
+            100% { background: rgba(255, 215, 0, 0.15); box-shadow: 0 0 5px #ffd700; }
         }
 
-        /* Responsive */
+        /* Petits scintillements aléatoires */
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0;
+            pointer-events: none;
+            animation: sparkleAnim 1s infinite;
+        }
+
+        @keyframes sparkleAnim {
+            0% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: 1; transform: scale(1.5); }
+            100% { opacity: 0; transform: scale(0.5); }
+        }
+
         @media (max-width: 768px) {
-            body { padding: 20px; }
             h1 { font-size: 2em; margin-bottom: 30px; }
             p { font-size: 1em; }
-            input { width: 80%; max-width: 300px; }
-            button { width: 80%; max-width: 300px; margin: 10px 0; }
-            .decoration { display: block; font-size: 1.5em; }
-            .diamond1, .diamond2 { top: 150px; bottom: auto; }
-            .mask1, .mask2 { display: block; top: 80px; }
-            #resultat { font-size: 1.2em; }
+            input, button { width: 80%; max-width: 300px; margin: 10px auto; }
         }
     </style>
 </head>
@@ -144,6 +142,7 @@
     <p id="resultat"></p>
 
     <script>
+        // Objets
         const objets = {
             "Klein_5943": { valeur: "3MV", description: "Une sculpture miniature célèbre." },
             "Gondole_2776": { valeur: "2MV", description: "Petit objet en forme de gondole." },
@@ -191,10 +190,16 @@
                 valeurInput.style.display = 'none';
                 resultat.innerHTML = 'Code de l\'orfèvre invalide.';
             }
+        }
 
-            resultat.classList.remove('show');
-            void resultat.offsetWidth;
-            resultat.classList.add('show');
+        // Créer des scintillements aléatoires
+        for (let i = 0; i < 50; i++) {
+            let sparkle = document.createElement('div');
+            sparkle.classList.add('sparkle');
+            sparkle.style.top = Math.random() * window.innerHeight + 'px';
+            sparkle.style.left = Math.random() * window.innerWidth + 'px';
+            sparkle.style.animationDelay = Math.random() * 3 + 's';
+            document.body.appendChild(sparkle);
         }
     </script>
 </body>
