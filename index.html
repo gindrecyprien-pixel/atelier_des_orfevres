@@ -64,6 +64,14 @@
             margin-top: 20px;
             font-weight: bold;
             text-shadow: 1px 1px 2px #000;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: opacity 0.8s ease, transform 0.8s ease, text-shadow 0.8s ease;
+        }
+        #resultat.show {
+            opacity: 1;
+            transform: translateY(0);
+            text-shadow: 0 0 10px #FFD700, 0 0 20px #FFD700, 0 0 30px #FFD700;
         }
         @media (max-width: 768px) {
             body { padding: 20px; }
@@ -118,6 +126,7 @@
             const code = document.getElementById('codeInput').value;
             const valeurInput = document.getElementById('valeurInput');
             const valeurLabel = document.getElementById('valeurLabel');
+            const resultat = document.getElementById('resultat');
             let message = '';
 
             if (orfèvre === 'estimationreel') {
@@ -151,9 +160,12 @@
                 message = 'Code de l\'orfèvre invalide.';
             }
 
-            document.getElementById('resultat').textContent = message;
+            // Effet magique : ajout de la classe "show" pour l'animation
+            resultat.textContent = message;
+            resultat.classList.remove('show');
+            void resultat.offsetWidth; // reflow pour relancer l'animation
+            resultat.classList.add('show');
         }
     </script>
 </body>
 </html>
-
