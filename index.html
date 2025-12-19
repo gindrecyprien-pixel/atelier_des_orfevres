@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Estimation des objets</title>
+    <title>Atelier des orfèvres</title>
     <style>
         body {
             background: linear-gradient(135deg, #000000, #FFD700, #000000);
@@ -67,13 +67,32 @@
             opacity: 0;
             transform: translateY(-10px);
             transition: opacity 0.8s ease, transform 0.8s ease, text-shadow 0.8s ease;
-            white-space: pre-line; /* pour gérer les sauts de ligne */
+            white-space: pre-line;
         }
         #resultat.show {
             opacity: 1;
             transform: translateY(0);
             text-shadow: 0 0 10px #FFD700, 0 0 20px #FFD700, 0 0 30px #FFD700;
         }
+        .description {
+            display: block;
+            background: rgba(255, 215, 0, 0.2);
+            color: #FFFFFF;
+            padding: 10px 15px;
+            margin-top: 10px;
+            border-radius: 10px;
+            font-size: 1em;
+            font-weight: normal;
+            animation: scintille 2s infinite alternate;
+        }
+
+        /* Animation scintillement doré */
+        @keyframes scintille {
+            0% { background: rgba(255, 215, 0, 0.2); box-shadow: 0 0 5px #FFD700; }
+            50% { background: rgba(255, 215, 0, 0.35); box-shadow: 0 0 15px #FFD700; }
+            100% { background: rgba(255, 215, 0, 0.2); box-shadow: 0 0 5px #FFD700; }
+        }
+
         @media (max-width: 768px) {
             body { padding: 20px; }
             h1 { font-size: 2em; }
@@ -93,7 +112,7 @@
     <div class="decoration diamond1">💎</div>
     <div class="decoration diamond2">💎</div>
 
-    <h1>Estimation des objets</h1>
+    <h1>Atelier des orfèvres</h1>
 
     <p>Entrez le code de l'objet :</p>
     <input type="text" id="codeInput" placeholder="Entrez le code">
@@ -108,7 +127,6 @@
     <p id="resultat"></p>
 
     <script>
-        // Dictionnaire des objets avec valeur et description
         const objets = {
             "Klein_5943": { valeur: "3€", description: "Une sculpture miniature célèbre." },
             "Gondole_2776": { valeur: "2€", description: "Petit objet en forme de gondole." },
@@ -130,16 +148,13 @@
             const resultat = document.getElementById('resultat');
             let message = '';
 
-            if (orfèvre === 'estimationreel') {
+            if (!objets.hasOwnProperty(code)) {
+                resultat.innerHTML = 'L\'objet n\'est pas répertorié';
+            } else if (orfèvre === 'estimationreel') {
                 valeurLabel.style.display = 'none';
                 valeurInput.style.display = 'none';
-
-                if (objets.hasOwnProperty(code)) {
-                    message = `L'objet "${code}" vaut ${objets[code].valeur}\nDescription : ${objets[code].description}`;
-                } else {
-                    message = 'L\'objet n\'est pas répertorié';
-                }
-
+                message = `L'objet "${code}" vaut ${objets[code].valeur}`;
+                resultat.innerHTML = `${message}<span class="description">${objets[code].description}</span>`;
                 document.getElementById('orfèvreCode').value = '';
             } else if (orfèvre === 'fausseestimation') {
                 valeurLabel.style.display = 'block';
@@ -148,23 +163,23 @@
                 valeurInput.value = '';
 
                 if (valeur) {
-                    message = `L'objet vaut ${valeur}€`;
+                    message = `L'objet "${code}" vaut ${valeur}€`;
+                    resultat.innerHTML = `${message}<span class="description">${objets[code].description}</span>`;
                     valeurLabel.style.display = 'none';
                     valeurInput.style.display = 'none';
                     document.getElementById('orfèvreCode').value = '';
                 } else {
-                    message = 'Veuillez entrer une valeur souhaitée.';
+                    resultat.innerHTML = 'Veuillez entrer une valeur souhaitée.';
                 }
             } else {
                 valeurLabel.style.display = 'none';
                 valeurInput.style.display = 'none';
-                message = 'Code de l\'orfèvre invalide.';
+                resultat.innerHTML = 'Code de l\'orfèvre invalide.';
             }
 
-            // Affichage avec effet magique
-            resultat.textContent = message;
+            // Effet magique pour le prix et description
             resultat.classList.remove('show');
-            void resultat.offsetWidth; // reflow pour relancer l'animation
+            void resultat.offsetWidth;
             resultat.classList.add('show');
         }
     </script>
