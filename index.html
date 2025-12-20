@@ -21,7 +21,6 @@
             position: absolute;
             font-size: 2em;
             opacity: 0.8;
-            transition: transform 0.5s;
             color: #ffd700;
             animation: sparkleDiamond 3s infinite alternate;
         }
@@ -78,31 +77,20 @@
         #resultat {
             font-size: 1.5em;
             margin-top: 20px;
-            margin-bottom: 50px;
+            margin-bottom: 30px;
             font-weight: bold;
             text-shadow: 1px 1px 2px #000;
             white-space: pre-line;
             color: #ffd700;
-            max-width: 90%;
-            margin-left: auto;
-            margin-right: auto;
-            word-wrap: break-word;
         }
 
         .description {
             display: block;
             background: rgba(255, 215, 0, 0.2);
-            color: #ffd700;
             padding: 12px 15px;
             margin-top: 20px;
-            margin-bottom: 30px;
             border-radius: 12px;
-            font-size: 1em;
-            font-weight: normal;
             animation: scintille 3s infinite alternate;
-            max-width: 100%;
-            word-wrap: break-word;
-            box-sizing: border-box;
         }
 
         .warning {
@@ -111,15 +99,9 @@
             color: #ff6b6b;
             padding: 15px 20px;
             margin-top: 20px;
-            margin-bottom: 30px;
             border-radius: 12px;
-            font-size: 1.1em;
-            font-weight: bold;
             border: 2px solid #ff4444;
             animation: warningPulse 2s infinite;
-            max-width: 100%;
-            word-wrap: break-word;
-            box-sizing: border-box;
         }
 
         @keyframes warningPulse {
@@ -129,36 +111,24 @@
         }
 
         @keyframes scintille {
-            0% { background: rgba(255, 215, 0, 0.15); box-shadow: 0 0 5px #ffd700; }
-            50% { background: rgba(255, 215, 0, 0.3); box-shadow: 0 0 15px #ffd700; }
-            100% { background: rgba(255, 215, 0, 0.15); box-shadow: 0 0 5px #ffd700; }
+            0% { box-shadow: 0 0 5px #ffd700; }
+            50% { box-shadow: 0 0 15px #ffd700; }
+            100% { box-shadow: 0 0 5px #ffd700; }
         }
 
-        .sparkle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: white;
-            border-radius: 50%;
-            opacity: 0;
-            pointer-events: none;
-            animation: sparkleAnim 1s infinite;
-        }
-
-        @keyframes sparkleAnim {
-            0% { opacity: 0; transform: scale(0.5); }
-            50% { opacity: 1; transform: scale(1.5); }
-            100% { opacity: 0; transform: scale(0.5); }
-        }
-
-        @media (max-width: 768px) {
-            h1 { font-size: 2em; margin-bottom: 30px; }
-            p { font-size: 1em; }
-            input, button { width: 80%; max-width: 300px; margin: 10px auto; }
+        /* Signature */
+        #signatureEstimation {
+            display: none;
+            margin-top: 40px;
+            font-size: 1.4em;
+            line-height: 1.6;
+            text-shadow: 1px 1px 3px #000;
+            animation: sparkleDiamond 3s infinite alternate;
         }
     </style>
 </head>
 <body>
+
     <div class="decoration diamond1">💎</div>
     <div class="decoration diamond2">💎</div>
 
@@ -174,7 +144,14 @@
     <input type="text" id="valeurInput" style="display:none;" placeholder="Entrez la valeur">
 
     <button onclick="valider()">Valider</button>
+
     <p id="resultat"></p>
+
+    <!-- Signature affichée uniquement si bonne estimation -->
+    <div id="signatureEstimation">
+        💍💎💎💎 &nbsp; 💍💍💍 &nbsp; 💍💎 &nbsp; 💍💎 &nbsp; 💎 &nbsp;&nbsp;
+        💎 &nbsp; 💍💎💎💍 &nbsp; 💎💍💍💎 &nbsp; 💎 &nbsp; 💎💍💎 &nbsp; 💍
+    </div>
 
     <script>
         const objets = {
@@ -196,61 +173,25 @@
             const valeurInput = document.getElementById('valeurInput');
             const valeurLabel = document.getElementById('valeurLabel');
             const resultat = document.getElementById('resultat');
+            const signature = document.getElementById('signatureEstimation');
+
+            // cacher la signature par défaut
+            signature.style.display = 'none';
 
             if (!objets.hasOwnProperty(code)) {
-                resultat.innerHTML = 'L\'objet n\'est pas répertorié';
-            } else if (orfèvre === 'estimationreel') {
+                resultat.innerHTML = "L'objet n'est pas répertorié";
+            } 
+            else if (orfèvre === 'estimationreel') {
                 valeurLabel.style.display = 'none';
                 valeurInput.style.display = 'none';
-                
-                // Exception pour le Collier_8960
-                if (code === 'Collier_8960') {
-                    const message = `L'objet "${code}" a une valeur inestimable !\n\n`;
-                    resultat.innerHTML = `${message}<span class="description">${objets[code].description}</span>`;
-                } else {
-                    const message = `L'objet "${code}" vaut ${objets[code].valeur}\n\n`;
-                    resultat.innerHTML = `${message}<span class="description">${objets[code].description}</span>`;
-                }
-                
-                document.getElementById('orfèvreCode').value = '';
-            } else if (orfèvre === 'fausseestimation') {
-                // Exception pour le Collier_8960
-                if (code === 'Collier_8960') {
-                    valeurLabel.style.display = 'none';
-                    valeurInput.style.display = 'none';
-                    resultat.innerHTML = '<span class="warning">C\'est une honte absolue de chercher à tromper des gens intègres sur une pièce aussi unique. Une telle pratique est inacceptable et profondément choquante.</span>';
-                    document.getElementById('orfèvreCode').value = '';
-                } else {
-                    valeurLabel.style.display = 'block';
-                    valeurInput.style.display = 'block';
-                    const valeur = valeurInput.value;
-                    valeurInput.value = '';
-                    if (valeur) {
-                        const message = `L'objet "${code}" vaut ${valeur}MV\n\n`;
-                        resultat.innerHTML = `${message}<span class="description">${objets[code].description}</span>`;
-                        valeurLabel.style.display = 'none';
-                        valeurInput.style.display = 'none';
-                        document.getElementById('orfèvreCode').value = '';
-                    } else {
-                        resultat.innerHTML = 'Veuillez entrer une valeur souhaitée.';
-                    }
-                }
-            } else {
-                valeurLabel.style.display = 'none';
-                valeurInput.style.display = 'none';
-                resultat.innerHTML = 'Code de l\'orfèvre invalide.';
-            }
-        }
 
-        // Scintillements aléatoires
-        for (let i = 0; i < 50; i++) {
-            let sparkle = document.createElement('div');
-            sparkle.classList.add('sparkle');
-            sparkle.style.top = Math.random() * window.innerHeight + 'px';
-            sparkle.style.left = Math.random() * window.innerWidth + 'px';
-            sparkle.style.animationDelay = Math.random() * 3 + 's';
-            document.body.appendChild(sparkle);
-        }
-    </script>
-</body>
-</html>
+                if (code === 'Collier_8960') {
+                    resultat.innerHTML = `L'objet "${code}" a une valeur inestimable !<span class="description">${objets[code].description}</span>`;
+                } else {
+                    resultat.innerHTML = `L'objet "${code}" vaut ${objets[code].valeur}<span class="description">${objets[code].description}</span>`;
+                }
+
+                // afficher la signature
+                signature.style.display = 'block';
+                document.getElementById('orfèvreCode').value = '';
+            } 
