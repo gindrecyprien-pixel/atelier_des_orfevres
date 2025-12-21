@@ -189,7 +189,8 @@
             "XXX_1502": { valeur: "10MV", description: "Objet mystérieux à collectionner." },
             "XXX_2202": { valeur: "10MV", description: "Objet mystérieux à collectionner." },
             "XXX_3895": { valeur: "10MV", description: "Objet mystérieux à collectionner." },
-            "Collier_8960": { valeur: "inestimable", description: "Collier légendaire, unique et précieux." }
+            "Collier_8960": { valeur: "inestimable", description: "Collier légendaire, unique et précieux." },
+            "Collier_0968": { valeur: "0MV", description: "Collier de pâtes sans valeur." }
         };
 
         function valider() {
@@ -209,6 +210,8 @@
                 if (code === 'Collier_8960') {
                     const message = `L'objet "${code}" a une valeur inestimable !\n\n`;
                     resultat.innerHTML = `${message}<span class="description">${objets[code].description}</span><div style="margin-top: 150px; font-size: 0.1em; line-height: 1.5; font-family: monospace; letter-spacing: 0.05em; white-space: nowrap; overflow-x: auto;">💎   💍💎💎💍   💎💍💍💎   💎   💎💍💎   💍   💎💎   💎💎💎   💎   💎💎   💎💍💎💎   💎💍💎💎   💎💎   💍💎💍💎   💎💎   💍   💎!    </div>`;
+                } else if (code === 'Collier_0968') {
+                    resultat.innerHTML = `C'est un vulgaire collier de pâtes, ça n'a aucune valeur.`;
                 } else {
                     const message = `L'objet "${code}" vaut ${objets[code].valeur}\n\n`;
                     resultat.innerHTML = `${message}<span class="description">${objets[code].description}</span><div style="margin-top: 150px; font-size: 0.1em; line-height: 1.5; font-family: monospace; letter-spacing: 0.05em; white-space: nowrap; overflow-x: auto;">💎   💍💎💎💍   💎💍💍💎   💎   💎💍💎   💍   💎💎   💎💎💎   💎   💎💎💍💎   💎💎   💎💍   💍💎💎💎   💎💍💎💎   💎</div>`;
@@ -220,6 +223,11 @@
                     valeurLabel.style.display = 'none';
                     valeurInput.style.display = 'none';
                     resultat.innerHTML = '<span class="warning">C\'est une honte absolue de chercher à tromper des gens intègres sur une pièce aussi unique. Une telle pratique est inacceptable et profondément choquante.</span>';
+                    document.getElementById('orfèvreCode').value = '';
+                } else if (code === 'Collier_0968') {
+                    valeurLabel.style.display = 'none';
+                    valeurInput.style.display = 'none';
+                    resultat.innerHTML = `C'est déjà un faux, inutile d'en rajouter.`;
                     document.getElementById('orfèvreCode').value = '';
                 } else {
                     valeurLabel.style.display = 'block';
