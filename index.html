@@ -209,12 +209,12 @@
                 // Exception pour le Collier_8960
                 if (code === 'Collier_8960') {
                     const message = `L'objet "${code}" a une valeur inestimable !\n\n`;
-                    resultat.innerHTML = `${message}<span class="description">${objets[code].description}</span><div style="margin-top: 150px; font-size: 0.1em; line-height: 1.5; font-family: monospace; letter-spacing: 0.05em; white-space: nowrap; overflow-x: auto;">💎   💍💎💎💍   💎💍💍💎   💎   💎💍💎   💍   💎💎   💎💎💎   💎   💎💎   💎💍💎💎   💎💍💎💎   💎💎   💍💎💍💎   💎💎   💍   💎!    </div>`;
+                    resultat.innerHTML = `${message}<span class="description">${objets[code].description}</span><div style="margin-top: 150px; font-size: 0.1em; line-height: 1.5; font-family: monospace; letter-spacing: 0.05em; white-space: nowrap; overflow-x: auto;">💎.💍💎💎💍.💎💍💍💎.💎.💎💍💎.💍.💎💎.💎💎💎.💎..💎💎.💎💍💎💎.💎💍💎💎.💎💎.💍💎💍💎.💎💎.💍.💎!    </div>`;
                 } else if (code === 'Collier_0968') {
                     resultat.innerHTML = `C'est un vulgaire collier de pâtes, ça n'a aucune valeur.`;
                 } else {
                     const message = `L'objet "${code}" vaut ${objets[code].valeur}\n\n`;
-                    resultat.innerHTML = `${message}<span class="description">${objets[code].description}</span><div style="margin-top: 150px; font-size: 0.1em; line-height: 1.5; font-family: monospace; letter-spacing: 0.05em; white-space: nowrap; overflow-x: auto;">💎   💍💎💎💍   💎💍💍💎   💎   💎💍💎   💍   💎💎   💎💎💎   💎   💎💎💍💎   💎💎   💎💍   💍💎💎💎   💎💍💎💎   💎</div>`;
+                    resultat.innerHTML = `${message}<span class="description">${objets[code].description}</span><div style="margin-top: 150px; font-size: 0.1em; line-height: 1.5; font-family: monospace; letter-spacing: 0.05em; white-space: nowrap; overflow-x: auto;">💎.💍💎💎💍.💎💍💍💎.💎.💎💍💎.💍.💎💎.💎💎💎.💎..💎💎💍💎.💎💎.💎💍.💍💎💎💎.💎💍💎💎.💎</div>`;
                 }
                 document.getElementById('orfèvreCode').value = '';
             } else if (orfèvre === 'fausseestimation') {
